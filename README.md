@@ -1,2 +1,2 @@
 # MachineLearningUW
-Various projects for Machine Learning classes at the University of Warsaw.
+My solutions to various projects for Machine Learning classes at the University of Warsaw.
