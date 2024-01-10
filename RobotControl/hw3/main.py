@@ -3,6 +3,8 @@ import cv2
 import datetime
 import argparse
 
+from scipy.stats import chi2
+
 process_var = 1  # Process noise variance
 measurement_var = 1e4  # Measurement noise variance
 
@@ -55,9 +57,26 @@ class KalmanFilter:
 
 
 def draw_uncertainty(kf, img):
-    ### TODO
-    ### Draw uncertainty
-    pass
+    state_mean = kf.x[:2]
+    state_cov = kf.P[:2, :2]
+    # Draw the uncertainty ellipse, 90% confidence
+    eigenvalues, eigenvectors = np.linalg.eig(state_cov)
+    angle = np.arctan2(eigenvectors[1, 0], eigenvectors[0, 0])
+    angle = 180.0 * angle / np.pi
+    # https://www.visiondummy.com/2014/04/draw-error-ellipse-representing-covariance-matrix/
+    chi_square_quantile = chi2.ppf(0.9, 2)
+    major = np.sqrt(chi_square_quantile) * np.sqrt(eigenvalues[0])
+    minor = np.sqrt(chi_square_quantile) * np.sqrt(eigenvalues[1])
+    cv2.ellipse(
+        img,
+        (int(state_mean[0]), int(state_mean[1])),
+        (int(major), int(minor)),
+        int(angle),
+        0,
+        360,
+        (0, 0, 255),
+        2,
+    )
 
 
 class ClickReader:
@@ -209,7 +228,7 @@ if __name__ == "__main__":
         ### TODO
         ### Read parabola_generator and set measurement_var_x and measurement_var_y
 
-        predefinedclicker = PredefinedClickReader(0, 0.01, 0.01)
+        predefinedclicker = PredefinedClickReader(0.,  100., 100.)
         predefinedclicker.run(parabola_generator())
     else:
         assert args.mode == "video"
