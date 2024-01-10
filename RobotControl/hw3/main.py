@@ -12,14 +12,11 @@ class KalmanFilter:
         # process_var: process variance, represents uncertainty in the model
         # measurement_var: measurement variance, represents measurement noise
 
-        ### TODO
-        ### Change the model to constant acceleration model
-
         # Measurement Matrix
-        self.H = np.array([[1, 0, 0, 0], [0, 1, 0, 0]])
+        self.H = np.array([[1, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0]])
 
         # Process Covariance Matrix
-        self.Q = np.eye(4) * process_var
+        self.Q = np.eye(6) * process_var
 
         # Measurement Covariance Matrix
         self.R = np.array(
@@ -30,14 +27,16 @@ class KalmanFilter:
         )
 
         # Initial State Covariance Matrix
-        self.P = np.eye(4)
+        self.P = np.eye(6)
 
         # Initial State
-        self.x = np.zeros(4)
+        self.x = np.zeros(6)
 
     def predict(self, dt):
         # State Transition Matrix
-        A = np.array([[1, 0, dt, 0], [0, 1, 0, dt], [0, 0, 1, 0], [0, 0, 0, 1]])
+        A = np.array([[1, 0, dt, 0, 0, 0], [0, 1, 0, dt, 0, 0],
+                      [0, 0, 1, 0, dt, 0], [0, 0, 0, 1, 0, dt],
+                      [0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 1]])
 
         # Predict the next state
         self.x = A @ self.x
@@ -52,7 +51,7 @@ class KalmanFilter:
         S = self.H @ self.P @ self.H.T + self.R
         K = self.P @ self.H.T @ np.linalg.inv(S)
         self.x += K @ y
-        self.P = (np.eye(4) - K @ self.H) @ self.P
+        self.P = (np.eye(6) - K @ self.H) @ self.P
 
 
 def draw_uncertainty(kf, img):
@@ -210,7 +209,7 @@ if __name__ == "__main__":
         ### TODO
         ### Read parabola_generator and set measurement_var_x and measurement_var_y
 
-        predefinedclicker = PredefinedClickReader(0, ...)
+        predefinedclicker = PredefinedClickReader(0, 0.01, 0.01)
         predefinedclicker.run(parabola_generator())
     else:
         assert args.mode == "video"
