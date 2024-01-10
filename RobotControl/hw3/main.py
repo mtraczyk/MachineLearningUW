@@ -178,6 +178,49 @@ def parabola_generator():
             )
 
 
+def find_red_ball(img):
+    hsv_image = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+    # Define red color range in HSV
+    lower_red1 = np.array([0, 120, 70])
+    upper_red1 = np.array([10, 255, 255])
+    lower_red2 = np.array([170, 120, 70])
+    upper_red2 = np.array([180, 255, 255])
+
+    # Create a mask for red color
+    mask1 = cv2.inRange(hsv_image, lower_red1, upper_red1)
+    mask2 = cv2.inRange(hsv_image, lower_red2, upper_red2)
+    mask = mask1 + mask2
+
+    # Morphological operations to remove noise
+    kernel = np.ones((3, 3), np.uint8)
+    mask = cv2.erode(mask, kernel, iterations=2)
+    mask = cv2.dilate(mask, kernel, iterations=2)
+
+    # find contours in the thresholded image
+    contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+
+    # finding contour with maximum area and store it as best_cnt
+    max_area = 0.
+    best_cnt = None
+    if contours is None:
+        return None
+
+    for c in contours:
+        area = cv2.contourArea(c)
+        if area > max_area:
+            max_area = area
+            best_cnt = c
+
+    # finding centroids of best_cnt and draw a circle there
+    M = cv2.moments(best_cnt)
+    if M["m00"] == 0:
+        return None
+    cx, cy = int(M['m10'] / M['m00']), int(M['m01'] / M['m00'])
+
+    return cx, cy
+
+
 class VideoReader:
     def __init__(
         self,
@@ -194,15 +237,26 @@ class VideoReader:
         self.fps = fps
 
     def run(self):
-        ### TODO
-        ### Set initial position using the first frame
+        _, frame = self.video.read()
+        cx, cy = find_red_ball(frame)
+        self.kf.x = np.array([cx, cy, 0, 0, 0, 0])
+
         while True:
             ret, frame = self.video.read()
             if not ret:
                 break
-            ### TODO
+
             ### Find the red ball in the frame
             ### Use Kalman Filter to track the ball and predict its position
+
+            self.kf.predict(1 / self.fps)
+            measurement = find_red_ball(frame)
+            if measurement is not None:
+                self.kf.update(np.array(measurement))
+
+            cv2.circle(
+                frame, (int(self.kf.x[0]), int(self.kf.x[1])), 15, (255, 0, 0), -1
+            )
             cv2.imshow(self.window_name, frame)
             if cv2.waitKey(1) & 0xFF == 27:
                 break
@@ -225,12 +279,9 @@ if __name__ == "__main__":
         click_reader = ClickReader(process_var, measurement_var)
         click_reader.run()
     elif args.mode == "predefined":
-        ### TODO
-        ### Read parabola_generator and set measurement_var_x and measurement_var_y
-
         predefinedclicker = PredefinedClickReader(0.,  100., 100.)
         predefinedclicker.run(parabola_generator())
     else:
         assert args.mode == "video"
-        video_reader = VideoReader(10, 10, "line.mp4")
+        video_reader = VideoReader(10, 10, "sinewave.mp4")
         video_reader.run()
