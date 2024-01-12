@@ -283,5 +283,5 @@ if __name__ == "__main__":
         predefinedclicker.run(parabola_generator())
     else:
         assert args.mode == "video"
-        video_reader = VideoReader(10, 10, "sinewave.mp4")
+        video_reader = VideoReader(1000, 10, "sinewave.mp4")
         video_reader.run()
