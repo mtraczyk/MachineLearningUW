@@ -19,15 +19,14 @@ if __name__ == '__main__':
     # If you want the simulation to be displayed more slowly, decrease rendering_freq
     # Note that this DOES NOT change the timestep used to approximate the physics of the simulation!
     drone_simulator = DroneSimulator(
-        model, data, viewer, desired_altitude = desired_altitude,
-        altitude_sensor_freq = 1, wind_change_prob = 0, rendering_freq = 1
-        )
+        model, data, viewer, desired_altitude=desired_altitude,
+        altitude_sensor_freq=1, wind_change_prob=0, rendering_freq=1
+    )
 
-    # TODO: Set appropriate gains for the altitude PID controller
     pid_altitude = PID(
-        gain_prop = 0, gain_int = 0, gain_der = 0,
-        sensor_period = drone_simulator.altitude_sensor_period
-        )
+        gain_prop=3., gain_int=1., gain_der=0.5,
+        sensor_period=drone_simulator.altitude_sensor_period
+    )
 
     # Increase the number of iterations for longer simulation
     for i in range(2000):
