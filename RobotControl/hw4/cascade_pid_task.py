@@ -24,13 +24,13 @@ if __name__ == '__main__':
     )
 
     pid_altitude = PID(
-        gain_prop=1., gain_int=100., gain_der=1.,
+        gain_prop=0.5, gain_int=0., gain_der=0.,
         sensor_period=drone_simulator.altitude_sensor_period
     )
 
-    MULTIPLIER = 100
+    MULTIPLIER = 50
     pid_acceleration = PID(
-        gain_prop=0.01, gain_int=0.05, gain_der=1.,
+        gain_prop=0.4, gain_int=0.1, gain_der=0.001,
         sensor_period=drone_simulator.altitude_sensor_period / MULTIPLIER
     )
 
@@ -38,6 +38,10 @@ if __name__ == '__main__':
     for i in range(4000):
         if i % MULTIPLIER == 0:
             desired_acceleration = pid_altitude.output_signal(desired_altitude, drone_simulator.measured_altitudes)
-        desired_thrust = pid_acceleration.output_signal(desired_acceleration,
-                                                        [data.sensor("body_linacc").data[2]])
+            desired_acceleration += 9.81
+        current_acceleration = data.sensor("body_linacc").data[2]
+        desired_thrust = pid_acceleration.output_signal(desired_acceleration, [current_acceleration])
+        print(f"Desired thrust: {desired_thrust}")
+        print(f"Current acceleration: {current_acceleration}")
+        print(f"Desired acceleration: {desired_acceleration}")
         drone_simulator.sim_step(desired_thrust)
