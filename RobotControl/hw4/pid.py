@@ -4,15 +4,15 @@ class PID:
         self.gain_der = gain_der
         self.gain_int = gain_int
         self.sensor_period = sensor_period
-        self.previous_error = None
+        self.previous_sensor_reading = None
         self.integral = 0
 
     def output_signal(self, commanded_variable, sensor_readings):
-        error = sensor_readings[-1] - commanded_variable
+        error = commanded_variable - sensor_readings[0]
         self.integral += error * self.sensor_period
         derivative = 0
-        if self.previous_error is not None:
-            derivative = (error - self.previous_error) / self.sensor_period
-        self.previous_error = error
+        if self.previous_sensor_reading is not None:
+            derivative = (sensor_readings[0] - self.previous_sensor_reading) * self.sensor_period
+        self.previous_sensor_reading = sensor_readings[0]
 
-        return -(self.gain_prop * error + self.gain_der * derivative + self.gain_int * self.integral)
+        return self.gain_prop * error - self.gain_der * derivative + self.gain_int * self.integral

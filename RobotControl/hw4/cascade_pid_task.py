@@ -24,19 +24,18 @@ if __name__ == '__main__':
     )
 
     pid_altitude = PID(
-        gain_prop=0.5, gain_int=0., gain_der=0.,
-        sensor_period=drone_simulator.altitude_sensor_period
+        gain_prop=0.35, gain_int=0., gain_der=0.01, sensor_period=100
     )
 
-    MULTIPLIER = 50
     pid_acceleration = PID(
-        gain_prop=0.4, gain_int=0.1, gain_der=0.001,
-        sensor_period=drone_simulator.altitude_sensor_period / MULTIPLIER
+        gain_prop=0.1, gain_int=100., gain_der=0., sensor_period=1
     )
 
     # Increase the number of iterations for a longer simulation
+    acc_history = []
+    att_history = []
     for i in range(4000):
-        if i % MULTIPLIER == 0:
+        if i % 100 == 0:
             desired_acceleration = pid_altitude.output_signal(desired_altitude, drone_simulator.measured_altitudes)
             desired_acceleration += 9.81
         current_acceleration = data.sensor("body_linacc").data[2]
@@ -44,4 +43,15 @@ if __name__ == '__main__':
         print(f"Desired thrust: {desired_thrust}")
         print(f"Current acceleration: {current_acceleration}")
         print(f"Desired acceleration: {desired_acceleration}")
+        acc_history.append(current_acceleration)
+        att_history.append(drone_simulator.measured_altitudes[0])
         drone_simulator.sim_step(desired_thrust)
+
+    # save data to file
+    with open("data_acc.txt", "w") as f:
+        f.write(",".join([str(x) for x in acc_history]))
+
+    with open("data_att.txt", "w") as f:
+        f.write(",".join([str(x) for x in att_history]))
+
+
