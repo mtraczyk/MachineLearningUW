@@ -32,26 +32,13 @@ if __name__ == '__main__':
     )
 
     # Increase the number of iterations for a longer simulation
-    acc_history = []
-    att_history = []
     for i in range(4000):
         if i % 100 == 0:
             desired_acceleration = pid_altitude.output_signal(desired_altitude, drone_simulator.measured_altitudes)
             desired_acceleration += 9.81
         current_acceleration = data.sensor("body_linacc").data[2]
         desired_thrust = pid_acceleration.output_signal(desired_acceleration, [current_acceleration])
-        print(f"Desired thrust: {desired_thrust}")
-        print(f"Current acceleration: {current_acceleration}")
-        print(f"Desired acceleration: {desired_acceleration}")
-        acc_history.append(current_acceleration)
-        att_history.append(drone_simulator.measured_altitudes[0])
         drone_simulator.sim_step(desired_thrust)
 
-    # save data to file
-    with open("data_acc.txt", "w") as f:
-        f.write(",".join([str(x) for x in acc_history]))
-
-    with open("data_att.txt", "w") as f:
-        f.write(",".join([str(x) for x in att_history]))
 
 

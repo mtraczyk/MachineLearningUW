@@ -24,7 +24,7 @@ if __name__ == '__main__':
     )
 
     pid_altitude = PID(
-        gain_prop=3., gain_int=1., gain_der=0.5,
+        gain_prop=4., gain_int=2., gain_der=10000.,
         sensor_period=drone_simulator.altitude_sensor_period
     )
 
