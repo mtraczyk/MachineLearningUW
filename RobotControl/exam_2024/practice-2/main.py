@@ -6,12 +6,21 @@ from pid import PID
 
 def simulate(cs, desired_pos):
     # TODO: design control for the system
-    ...
+    pid_gps = PID(
+        gain_prop=0.35, gain_int=0., gain_der=0.01, sensor_period=100
+    )
+
+    pid_ang_vel = PID(
+        gain_prop=0.1, gain_int=100., gain_der=0., sensor_period=1
+    )
     # TODO end
 
-    for _ in range(3_000):
+    for i in range(3_000):
         # TODO: find value for `forward_torque` using designed control
-        forward_torque = 0
+        if i % 100 == 0:
+            desired_ang_vel = pid_gps.output_signal(desired_pos, cs.position)
+        current_ang_vel = cs.wheel_angular_vel
+        forward_torque = pid_ang_vel.output_signal(desired_ang_vel, current_ang_vel)
         # TODO end
 
         print('-' * 20)
