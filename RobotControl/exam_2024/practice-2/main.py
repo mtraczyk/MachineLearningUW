@@ -7,11 +7,11 @@ from pid import PID
 def simulate(cs, desired_pos):
     # TODO: design control for the system
     pid_gps = PID(
-        gain_prop=7., gain_int=0., gain_der=0.2, sensor_period=100
+        gain_prop=11., gain_int=0., gain_der=0.1, sensor_period=100
     )
 
     pid_ang_vel = PID(
-        gain_prop=7., gain_int=0.2, gain_der=0., sensor_period=1
+        gain_prop=11., gain_int=0.1, gain_der=0., sensor_period=1
     )
     # TODO end
 
@@ -24,7 +24,6 @@ def simulate(cs, desired_pos):
         # TODO end
 
         print('-' * 20)
-        print(f'Desired ang velocity: {desired_ang_vel}')
         print(f'Gyro: {cs.wheel_angular_vel}')
         print(f'GPS: {cs.position}')
         print(f'Forward_torque: {forward_torque}')

@@ -95,12 +95,11 @@ def check_ball(seed=1337) -> bool:
 
 
 def find_the_car(img):
-    sensitivity = 15
-    lower_white = np.array([0, 0, 255 - sensitivity])
-    upper_white = np.array([255, sensitivity, 255])
+    lower = np.array([0, 0, 172])
+    upper = np.array([180, 255, 255])
 
     # Create a mask for red color
-    mask = cv2.inRange(img, lower_white, upper_white)
+    mask = cv2.inRange(img, lower, upper)
 
     # Morphological operations to remove noise
     kernel = np.ones((3, 3), np.uint8)
@@ -114,7 +113,14 @@ def find_the_car(img):
     max_area = 0.
     best_cnt = None
     for c in contours:
-        area = cv2.contourArea(c)
+        # (323, 389) is one of the central pixels of the car with the camera
+        M = cv2.moments(c)
+        if M['m00'] != 0:
+            c_x, c_y = int(M['m10'] / M['m00']), int(M['m01'] / M['m00'])
+        else:
+            c_x, c_y = 323, 389
+
+        area = np.linalg.norm(np.array([c_x, c_y]) - np.array([323, 389]))
         if area > max_area:
             max_area = area
             best_cnt = c
@@ -151,11 +157,31 @@ def drive_to_ball_1(seed=1337):
     for _ in range(1000):
         mujoco.mj_step(model, data)
     # TODO Add your code here
-    data.actuator("forward 2").ctrl = 1.
-    for i in range(1000):
-        viewer.sync()
-        estimate_pos_of_the_car(get_image())
+    b_x, b_y = -1, -1
+    data.actuator("turn 1").ctrl = -1
+    for _ in range(1000):
+        # viewer.sync()
+        area, b_x, b_y = estimate_pos_of_the_blue_object(get_image())
         mujoco.mj_step(model, data)
+        if area > 1000:
+            data.actuator("turn 1").ctrl = 0
+            break
+
+    # Now the car with the camera can see both the object and the approaching car.
+    print(np.array([b_x, b_y]))
+    data.actuator("forward 2").ctrl = 1.
+    for i in range(10000):
+        # viewer.sync()
+        _, car_x, car_y = estimate_pos_of_the_car(get_image())
+        print(np.array([car_x, car_y]))
+        print(np.linalg.norm(np.array([b_x, b_y]) - np.array([car_x, car_y])))
+        THRESHOLD = 10  # Needs to be determined
+        if np.linalg.norm(np.array([b_x, b_y]) - np.array([car_x, car_y])) < THRESHOLD:
+            break
+        mujoco.mj_step(model, data)
+
+        # It's almost working. The problem is that I didn't manage to differentiate between the points
+        # on the car with the camera and without the camera on time.
 
 
 def drive_to_ball_2(seed=1337):
