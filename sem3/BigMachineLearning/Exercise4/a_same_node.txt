@@ -1,0 +1,5 @@
+NODELIST=steven
+WORLD_SIZE=2
+MASTER_ADDR=steven
+Rank 0: Time taken = 0.018944978713989258 seconds
+Rank 1: Time taken = 0.018906116485595703 seconds
