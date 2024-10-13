@@ -4,11 +4,11 @@
 #SBATCH --partition=common
 #SBATCH --qos=4gpu1h
 #SBATCH --time=5
-#SBATCH --output=output.txt
-#SBATCH --nodes=2
+#SBATCH --output=d.txt
+#SBATCH --nodes=3
 #SBATCH --ntasks-per-node=2
 
-export MASTER_PORT=12340
+export MASTER_PORT=12342
 export WORLD_SIZE=${SLURM_NPROCS}
 
 echo "NODELIST="${SLURM_NODELIST}

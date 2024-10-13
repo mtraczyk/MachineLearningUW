@@ -1,0 +1,43 @@
+NODELIST=steven,sylvester
+WORLD_SIZE=4
+MASTER_ADDR=steven
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 94.48169374465942s
+Accuracy on training data
+Got 59088/60000 with accuracy  98.48
+Accuracy on testing data
+Got 9691/10000 with accuracy  96.91
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 94.48149609565735s
+Accuracy on training data
+Got 59088/60000 with accuracy  98.48
+Accuracy on testing data
+Got 9691/10000 with accuracy  96.91
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 94.48135614395142s
+Accuracy on training data
+Got 59088/60000 with accuracy  98.48
+Accuracy on testing data
+Got 9691/10000 with accuracy  96.91
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 94.48258996009827s
+Accuracy on training data
+Got 59088/60000 with accuracy  98.48
+Accuracy on testing data
+Got 9691/10000 with accuracy  96.91

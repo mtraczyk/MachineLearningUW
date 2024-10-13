@@ -1,0 +1,83 @@
+NODELIST=steven
+WORLD_SIZE=8
+MASTER_ADDR=steven
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 146.7504541873932s
+Accuracy on training data
+Got 59424/60000 with accuracy  99.04
+Accuracy on testing data
+Got 9718/10000 with accuracy  97.18
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 146.75599193572998s
+Accuracy on training data
+Got 59424/60000 with accuracy  99.04
+Accuracy on testing data
+Got 9718/10000 with accuracy  97.18
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 146.75255155563354s
+Accuracy on training data
+Got 59424/60000 with accuracy  99.04
+Accuracy on testing data
+Got 9718/10000 with accuracy  97.18
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 146.749933719635s
+Accuracy on training data
+Got 59424/60000 with accuracy  99.04
+Accuracy on testing data
+Got 9718/10000 with accuracy  97.18
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 146.75463318824768s
+Accuracy on training data
+Got 59424/60000 with accuracy  99.04
+Accuracy on testing data
+Got 9718/10000 with accuracy  97.18
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 146.75068998336792s
+Accuracy on training data
+Got 59424/60000 with accuracy  99.04
+Accuracy on testing data
+Got 9718/10000 with accuracy  97.18
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 146.75568866729736s
+Accuracy on training data
+Got 59424/60000 with accuracy  99.04
+Accuracy on testing data
+Got 9718/10000 with accuracy  97.18
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 146.7480547428131s
+Accuracy on training data
+Got 59424/60000 with accuracy  99.04
+Accuracy on testing data
+Got 9718/10000 with accuracy  97.18
