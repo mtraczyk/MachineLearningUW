@@ -1,5 +1,0 @@
-NODELIST=steven,sylvester
-WORLD_SIZE=2
-MASTER_ADDR=steven
-Rank 0: Time taken = 0.9418880939483643 seconds
-Rank 1: Time taken = 1.0206093788146973 seconds

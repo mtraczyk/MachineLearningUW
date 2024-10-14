@@ -1,8 +1,0 @@
-Learning took 50.92687010765076s
-Accuracy on training data
-Learning took 50.96018695831299s
-Accuracy on training data
-Learning took 51.063457012176514s
-Accuracy on training data
-Learning took 51.35107922554016s
-Accuracy on training data
