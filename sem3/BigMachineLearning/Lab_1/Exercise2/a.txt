@@ -1,0 +1,33 @@
+NODELIST=arnold,asusgpu[1-2]
+WORLD_SIZE=3
+MASTER_ADDR=arnold
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 67.96358728408813s
+Accuracy on training data
+Got 59004/60000 with accuracy  98.34
+Accuracy on testing data
+Got 9695/10000 with accuracy  96.95
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 67.9658145904541s
+Accuracy on training data
+Got 59004/60000 with accuracy  98.34
+Accuracy on testing data
+Got 9695/10000 with accuracy  96.95
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 67.96318769454956s
+Accuracy on training data
+Got 59004/60000 with accuracy  98.34
+Accuracy on testing data
+Got 9695/10000 with accuracy  96.95

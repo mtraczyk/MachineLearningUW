@@ -1,0 +1,6 @@
+NODELIST=arnold,asusgpu[1-2]
+WORLD_SIZE=9
+MASTER_ADDR=arnold
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** JOB 28666 ON arnold CANCELLED AT 2024-10-13T15:02:59 DUE TO TIME LIMIT ***
+slurmstepd: error: *** STEP 28666.0 ON arnold CANCELLED AT 2024-10-13T15:02:59 DUE TO TIME LIMIT ***

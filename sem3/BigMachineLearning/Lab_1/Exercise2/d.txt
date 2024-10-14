@@ -1,0 +1,63 @@
+NODELIST=arnold,asusgpu[1-2]
+WORLD_SIZE=6
+MASTER_ADDR=arnold
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 104.96484470367432s
+Accuracy on training data
+Got 59314/60000 with accuracy  98.86
+Accuracy on testing data
+Got 9726/10000 with accuracy  97.26
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 104.96514630317688s
+Accuracy on training data
+Got 59314/60000 with accuracy  98.86
+Accuracy on testing data
+Got 9726/10000 with accuracy  97.26
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 104.96951723098755s
+Accuracy on training data
+Got 59314/60000 with accuracy  98.86
+Accuracy on testing data
+Got 9726/10000 with accuracy  97.26
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 104.97120928764343s
+Accuracy on training data
+Got 59314/60000 with accuracy  98.86
+Accuracy on testing data
+Got 9726/10000 with accuracy  97.26
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 104.96394848823547s
+Accuracy on training data
+Got 59314/60000 with accuracy  98.86
+Accuracy on testing data
+Got 9726/10000 with accuracy  97.26
+Epoch: 0
+Epoch: 1
+Epoch: 2
+Epoch: 3
+Epoch: 4
+Learning took 104.96650123596191s
+Accuracy on training data
+Got 59314/60000 with accuracy  98.86
+Accuracy on testing data
+Got 9726/10000 with accuracy  97.26

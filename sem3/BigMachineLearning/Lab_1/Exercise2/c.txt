@@ -1,0 +1,6 @@
+NODELIST=arnold,sylvester
+WORLD_SIZE=6
+MASTER_ADDR=arnold
+slurmstepd: error: *** JOB 28667 ON arnold CANCELLED AT 2024-10-13T15:08:59 DUE TO TIME LIMIT ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 28667.0 ON arnold CANCELLED AT 2024-10-13T15:08:59 DUE TO TIME LIMIT ***
