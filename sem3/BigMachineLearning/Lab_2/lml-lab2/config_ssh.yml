@@ -1,0 +1,45 @@
+---
+- name: creating a new ssh key without password
+  hosts: key_node
+  tasks:
+    - name: Generate ssh key pair
+      openssh_keypair:
+        path: /tmp/id_ssh_rsa
+
+    - name: Fetch the public key from the node to master
+      fetch:
+        src: "/tmp/id_ssh_rsa.pub"
+        dest: "buffer/id_rsa.pub"
+        flat: yes
+
+    - name: Fetch the private key from the node to master
+      fetch:
+        src: "/tmp/id_ssh_rsa"
+        dest: "buffer/id_rsa"
+        flat: yes
+      
+- name: configuring all the hosts
+  hosts: mpi_nodes
+  tasks:
+    - name: Set authorized key
+      authorized_key:
+        user: "{{ ansible_ssh_user }}"
+        state: present
+        key: "{{ lookup('file', 'buffer/id_rsa.pub') }}"
+        
+    - name: Copy private key
+      copy:
+        src: "buffer/id_rsa"
+        dest: ".ssh/id_rsa"
+        mode: '0600'
+
+    - name: Deactivate StrictHostKeyChecking
+      shell:
+        cmd: printf "Host * \n\t StrictHostKeyChecking no" > .ssh/config
+        creates: .ssh/config
+
+    - name: Copy machinefile
+      copy:
+        src: "hostfile_mpi"
+        dest: "hostfile_mpi"
+        mode: '0600'
